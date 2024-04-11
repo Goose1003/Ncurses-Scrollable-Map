@@ -1,10 +1,12 @@
 #include <ncurses.h>
 
+char tiles[100][100];
+
 struct Player {
     int y;
     int x;
     WINDOW* win;
-    Player(WINDOW* w) : win(w), x(0), y(0) {}
+    Player(WINDOW* w) : win(w), x(50), y(50) {}
     void display() {
         wclear(win);
         box(win, (int)'|', (int)'-');
@@ -12,6 +14,10 @@ struct Player {
         mvwprintw(win, 2, 1, "x: %d", x);
         wrefresh(win);
     }
+    void mvup() { if (y > 0) y--; }
+    void mvdown() { if (y < 100) y++; }
+    void mvright() { if (x < 100) x++; }
+    void mvleft() { if (x > 0) x--; }
 };
 
 int getmv(Player* p){
@@ -19,16 +25,16 @@ int getmv(Player* p){
     choice = getch();
     switch (choice) {
         case (int)'w':
-            p->y--;
-            break;
-        case (int)'s':
-            p->y++;
+            p->mvup();
             break;
         case (int)'a':
-            p->x--;
+            p->mvleft();
+            break;
+        case (int)'s':
+            p->mvdown();
             break;
         case (int)'d':
-            p->x++;
+            p->mvright();
             break;
         default:
             break;
@@ -39,6 +45,7 @@ int getmv(Player* p){
 int main (){
     initscr();
     noecho();
+    tiles[50][50] = '0';
     WINDOW* mainwin = newwin(25, 80, 0, 0);
     Player* p = new Player(mainwin);
     refresh();
