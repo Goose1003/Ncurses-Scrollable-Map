@@ -19,16 +19,16 @@ int getmv(Player* p){
     choice = getch();
     switch (choice) {
         case (int)'w':
-        p->y--;
+            p->y--;
             break;
         case (int)'s':
-        p->y++;
+            p->y++;
             break;
         case (int)'a':
-        p->x--;
+            p->x--;
             break;
         case (int)'d':
-        p->x++;
+            p->x++;
             break;
         default:
             break;
