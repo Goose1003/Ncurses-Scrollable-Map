@@ -6,16 +6,16 @@ struct Player {
     int x;
     WINDOW* win;
     Player(WINDOW* w, int newY, int newX) : win(w), y(newY), x(newX) {};
-    void mvup() { if (y < 99) y++; }
-    void mvdown() { if (y > 0) y--; }
-    void mvright() { if (x > 0) x--; }
-    void mvleft() { if (x < 99) x++; }
+    void mvup() { y--; }
+    void mvdown() { y++; }
+    void mvright() { x++; }
+    void mvleft() { x--; }
     void scrollMap() {
-        int xOffSet = 42, yOffSet = 11;
+        int xOffSet = 43, yOffSet = 12;
         wclear(win);
-        for (int i = 0; i < 32; i++) {
-            for (int j = 0; j < 98; j++) {
-                mvwaddch(win, (y - yOffSet) + i, (x - xOffSet) + j, s[i].at(j));
+        for (int i = 0; i < map1.size(); i++) {
+            for (int j = 0; j < map1[i].size(); j++) {
+                mvwaddch(win, (-1 * y + yOffSet) + i, (-1 * x + xOffSet) + j, map1[i][j]);
             }
         }
     }
