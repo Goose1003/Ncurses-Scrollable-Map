@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include "map.h"
+using namespace std;
 
 struct Player {
     int y;
@@ -9,18 +10,19 @@ struct Player {
     void mvdown() { y++; }
     void mvright() { x++; }
     void mvleft() { x--; }
-    void scrollMap() {
-        int xOffSet = 43, yOffSet = 12;
+    void scrollMap(vector<string> mapname) {
+        int yOffSet = 12 - y, xOffSet = 43 - x;
         clear();
-        for (int i = 0; i < map1.size(); i++) {
-            for (int j = 0; j < map1[i].size(); j++) {
-                mvaddch((-1 * y + yOffSet) + i, (-1 * x + xOffSet) + j, map1[i][j]);
-            }
+        for (int i = 0; i < mapname.size(); i++) {
+            if (xOffSet < 1) { mapname[i].resize(mapname.size() + xOffSet - 1); }
+            mvprintw(yOffSet + i, xOffSet, "%s", mapname[i].c_str());
         }
+        mvprintw(0, 0, "yOffset: %d", yOffSet);
+        mvprintw(1, 0, "xOffset: %d", xOffSet);
     }
     void display() {
         displaypos();
-        scrollMap();
+        scrollMap(map1);
         //box(win, (int)'|', (int)'-');
         mvaddch(12, 43, '@');
         move(12, 43);
