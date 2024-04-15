@@ -14,7 +14,6 @@ struct Player {
         int yOffSet = 12 - y, xOffSet = 43 - x;
         clear();
         for (int i = 0; i < mapname.size(); i++) {
-            if (xOffSet < 1) { mapname[i].resize(mapname.size() + xOffSet - 1); }
             mvprintw(yOffSet + i, xOffSet, "%s", mapname[i].c_str());
         }
         mvprintw(0, 0, "yOffset: %d", yOffSet);
